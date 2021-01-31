@@ -2,6 +2,8 @@
 
 Сервер на Nest.js и Api на основе Swagger
 
+Swagger: http://localhost:8000/docs/
+
 ## Инициализация проекта
 
 ```
