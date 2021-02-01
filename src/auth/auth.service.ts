@@ -24,7 +24,9 @@ export class AuthService {
   }
 
   async login(form: LoginRequestDto) {
-    return this.getToken(form.email);
+    return {
+      access_token: this.getToken(form.email),
+    };
   }
 
   async register(form: RegisterRequestDto) {
@@ -41,23 +43,21 @@ export class AuthService {
     });
     try {
       await user.save();
-      const token = this.getToken(user.email);
+      const access_token = this.getToken(user.email);
       return {
         user: {
           name: user.name,
           email: user.email,
         },
-        access_token: token,
+        access_token,
       };
     } catch (err) {
       return err;
     }
   }
 
-  private getToken = (email: string): { access_token: string } => {
+  private getToken = (email: string): string => {
     const payload = { email };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return this.jwtService.sign(payload);
   };
 }
